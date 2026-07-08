@@ -481,9 +481,9 @@ function deleteConsentSettings() {
             //Cookies entfernen, wenn vorhanden
             cookieNames.forEach(function(name) {
               chrome.cookies.remove({ url: currentUrl, name: name });
-              //console.log("remove cookie: ", name); 
+              //console.log("remove cookie: ", name);
             });
-      
+
             //LS Einträge entfernen, wenn vorhanden
             chrome.scripting.executeScript({
               target: { tabId: tabId },
@@ -508,10 +508,6 @@ function deleteConsentSettings() {
               args: [sessionStorageKeys]
             }, function() {
               chrome.tabs.reload(tabId);
-              // Popup erst schließen, wenn die gesamte Async-Kette (Cookies,
-              // LS/SS, Reload) durchgelaufen ist. Ein früheres window.close()
-              // zerstört den Popup-Kontext und bricht die ausstehenden
-              // Callbacks ab, bevor die Cookies überhaupt entfernt werden.
               window.close();
             });
 
